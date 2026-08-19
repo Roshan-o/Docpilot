@@ -3,8 +3,6 @@ from __future__ import annotations
 from types import SimpleNamespace
 from uuid import uuid4
 
-import pytest
-
 from app.core.adapters import (
     AdapterRegistry,
     DoclingSupportedAdapter,
@@ -106,7 +104,7 @@ def test_model_gateway_complete_returns_error_when_all_models_fail(monkeypatch):
 
     result = gateway.complete("question")
 
-    assert result[1:] == ("primary", True, "Selected the default primary model for this task type. All candidate models failed in fallback chain.")
+    assert result[1:] == ("primary", True, "Selected a fast model for low-latency interactive response. All candidate models failed in fallback chain.")
     assert "Failed to get response" in result[0]
 
 
