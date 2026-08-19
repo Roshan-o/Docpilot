@@ -1,5 +1,7 @@
 # DocPilot
 
+[![codecov](https://codecov.io/gh/TOMATOsJr/project_3_docpilot/branch/main/graph/badge.svg)](https://codecov.io/gh/TOMATOsJr/project_3_docpilot)
+
 DocPilot is a multi-model document intelligence platform for uploading, reading, querying, editing, and synthesizing documents with AI assistance. The project combines a FastAPI backend, a Vite + React frontend, PostgreSQL persistence, and a model gateway that can route requests across multiple LLM providers.
 
 The system is designed around a document pipeline rather than a simple chat interface. Uploaded files are parsed, chunked, stored in PostgreSQL, embedded for retrieval, and then used for grounded Q&A or scoped edit proposals with diff-based review.
@@ -147,6 +149,19 @@ All backend endpoints are mounted under `/api`.
 - `POST /api/synthesis`
 
 ## Verification
+
+The backend API suite uses FastAPI's in-process test client and fakes for persistence and model services. It does not require PostgreSQL, Docker, provider keys, or network access:
+
+```bash
+cd backend
+python -m pip install -e ".[dev]"
+python -m pytest -q
+python -m pytest -q --cov=app --cov-report=term-missing --cov-report=xml
+```
+
+GitHub Actions runs the backend tests and publishes coverage to Codecov on every push and pull request. Coverage is currently report-only; CI does not enforce a minimum percentage.
+
+Authentication and rate limiting are not implemented yet, so this suite does not claim 401/403 or 429 behavior. Those cases should be added when those product controls are introduced.
 
 The repository includes a lightweight ingestion smoke test:
 
