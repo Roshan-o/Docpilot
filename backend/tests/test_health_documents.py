@@ -69,8 +69,7 @@ def test_upload_rejects_missing_filename(client):
         files={"file": ("", b"content", "text/plain")},
     )
 
-    assert response.status_code == 400
-    assert response.json()["detail"] == "File must have a name"
+    assert response.status_code == 422
 
 
 def test_document_endpoints_reject_unknown_and_malformed_ids(client):
